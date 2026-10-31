@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>字幕设置 - 美剧追新</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="shell settings-shell">
+<header class="app-header">
+      <div class="app-brand"><img src="icon.png" alt="" width="64" height="64"><div><p class="eyebrow">豆瓣新剧发现 · 美剧追更 · v1.9.2</p><h1>美剧追新</h1><p class="subtitle">让好剧和中文字幕，一起到位。</p></div></div>
+      <nav class="page-nav" aria-label="页面导航"><a href="tv.html">最新美剧</a><a href="index.html">资源搜索</a><a href="settings.html" class="active" aria-current="page">字幕设置</a></nav>
+    </header>
+<form id="subtitle-settings" class="settings-card" autocomplete="off">
+<h2>字幕来源</h2><p class="hint">ASSRT 优先；没有合适结果或暂不可用时尝试 OpenSubtitles。SubHD 始终保留网站下载入口。</p>
+<section class="provider-card"><div class="provider-heading"><h3>ASSRT <small>主源</small></h3><span id="assrt-state" class="config-state">正在读取…</span></div><label for="assrt-token">API Token</label><input id="assrt-token" type="password" maxlength="256" placeholder="填入 ASSRT Token，留空保留已保存的值" autocomplete="new-password"><label class="subtitle-skip clear-secret"><input id="clear-assrt" type="checkbox">清除已保存的 ASSRT Token</label><p class="hint"><a href="https://assrt.net/api/doc" target="_blank" rel="noopener noreferrer">获取与使用 Token</a> · 注册后可在 ASSRT 用户面板查看。</p></section>
+<section class="provider-card"><div class="provider-heading"><h3>OpenSubtitles <small>备源</small></h3><span id="opensubtitles-state" class="config-state">正在读取…</span></div><label for="opensubtitles-key">API key</label><input id="opensubtitles-key" type="password" maxlength="256" placeholder="填入 API key，留空保留已保存的值" autocomplete="new-password"><label class="subtitle-skip clear-secret"><input id="clear-opensubtitles" type="checkbox">清除已保存的 OpenSubtitles API key</label><p class="hint"><a href="https://www.opensubtitles.com/consumers" target="_blank" rel="noopener noreferrer">申请 API key</a> · 可用额度以字幕服务实际返回为准。</p></section>
+<section class="provider-card"><div class="provider-heading"><h3>SubHD <small>网站入口</small></h3><span class="config-state">无需配置</span></div><p class="hint">遇到验证或需解压的字幕，可到网站下载；下载后仍可在应用内同名另存。</p></section>
+<label for="subtitle-language">优先语言</label><select id="subtitle-language"><option value="zh-CN">简体中文优先</option><option value="zh-TW">繁体中文优先</option></select><p class="hint">匹配结果会注明实际语言；改文件名不转换字幕内容。</p>
+<div class="actions"><button type="submit" id="save-settings" disabled>保存设置</button><a href="index.html">去搜索并下载字幕</a></div><p id="settings-status" role="status" class="sheet-status">正在读取配置…</p>
+<p class="hint">密钥只保存在 NAS 私有配置，不回显、不写入源码包。字幕下载到当前浏览器；自动保存到 NAS 视频目录和后台持续补找尚未加入此版本。</p>
+</form><footer>美剧追新 · v1.9.2</footer></main><script src="fnos.js" defer></script><script src="settings.js" defer></script></body></html>

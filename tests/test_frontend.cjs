@@ -1,0 +1,11 @@
+const fs = require('fs'), vm = require('vm'), assert = require('assert');
+const source = fs.readFileSync(require('path').join(__dirname, '../app/public/app.js'), 'utf8');
+const helpers = source.slice(source.indexOf('function hasChineseSubtitleHint'), source.indexOf('function createSubtitlePanel'));
+const context = vm.createContext({localStorage: {getItem:()=>null}}); vm.runInContext(helpers,context);
+for (const s of ['Movie.CHS','Movie.CHT','电影.中文字幕','电影.中英双字']) assert(context.hasChineseSubtitleHint(s));
+for (const s of ['国语电影','盗梦空间','Something.English','CHShow']) assert(!context.hasChineseSubtitleHint(s));
+assert.equal(context.renamedSubtitle('Actual.Video.2026.1080p.mkv','sample.SRT','zh-CN'),'Actual.Video.2026.1080p.zh-CN.srt');
+assert.equal(context.renamedSubtitle('电影.mp4','sample.ass','zh-TW'),'电影.zh-TW.ass');
+assert.throws(()=>context.renamedSubtitle('film.mkv','archive.zip','zh-CN'));
+assert.throws(()=>context.renamedSubtitle('','sample.srt','zh-CN'));
+console.log('12 frontend assertions passed');

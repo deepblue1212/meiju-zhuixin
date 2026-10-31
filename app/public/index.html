@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>美剧追新</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="app-header">
+      <div class="app-brand">
+      <img src="icon.png" alt="" width="72" height="72">
+      <div>
+        <p class="eyebrow">豆瓣新剧发现 · 美剧追更 · v1.9.2</p>
+        <h1>美剧追新</h1>
+        <p class="subtitle">搜索资源 · 下载到飞牛 · 匹配中文字幕</p>
+      </div>
+    </div>
+      <nav class="page-nav" aria-label="页面导航">
+      <a href="tv.html">最新美剧</a>
+      <a href="index.html" class="active" aria-current="page">资源搜索</a>
+      <a href="settings.html">字幕设置</a>
+    </nav>
+    </header>
+
+    <form id="search-form" class="search-card">
+      <label for="query">美剧名称，也支持电影</label>
+      <div class="search-row">
+        <input id="query" name="query" maxlength="200" autocomplete="off" placeholder="例如：人生切割术、Severance" required>
+        <button type="submit">识别并搜索</button>
+      </div>
+      <p class="hint">输入中文时会列出最可能的英文片名供你选择；输入英文则直接搜索。</p>
+    </form>
+
+    <details class="manual-magnet">
+      <summary>已有磁力链接？直接添加到飞牛下载</summary>
+      <form id="magnet-form"><label for="magnet-input">磁力链接</label><input id="magnet-input" maxlength="16000" placeholder="magnet:?xt=urn:btih:…" required><button type="submit">下载到飞牛</button></form>
+    </details>
+    <p id="download-connection" class="connection-status">正在连接飞牛桌面…</p>
+    <section id="status" class="status" aria-live="polite">应用已就绪。</section>
+    <section id="title-options" class="title-options hidden"></section>
+    <section id="result-controls" class="result-controls hidden" aria-label="资源筛选和排序">
+      <div class="filter-grid">
+        <label>清晰度
+          <select id="resolution-filter">
+            <option value="">全部</option><option value="2160p">2160p / 4K</option><option value="1080p">1080p</option><option value="720p">720p</option><option value="576p">576p</option><option value="480p">480p</option><option value="other">其他/未知</option>
+          </select>
+        </label>
+        <label>编码
+          <select id="codec-filter">
+            <option value="">全部</option><option value="hevc">H.265 / x265</option><option value="avc">H.264 / x264</option><option value="av1">AV1</option><option value="other">其他/未知</option>
+          </select>
+        </label>
+        <label>季（S）<input id="season-filter" type="number" min="1" max="99" placeholder="例如 1"></label>
+        <label>集（E）<input id="episode-filter" type="number" min="1" max="999" placeholder="例如 3"></label>
+        <label>排序
+          <select id="result-sort">
+            <option value="seeders_desc">做种数从高到低</option><option value="season_episode_asc">季集从小到大</option><option value="season_episode_desc">季集从大到小</option><option value="added_desc">收录时间从新到旧</option><option value="size_desc">大小从大到小</option><option value="size_asc">大小从小到大</option>
+          </select>
+        </label>
+      </div>
+      <button id="search-filtered" type="button">筛选后搜索</button>
+      <button id="reset-result-controls" type="button" class="secondary">重置筛选</button>
+    </section>
+    <section id="toolbar" class="toolbar hidden">
+      <button id="select-all" type="button" class="secondary">全选</button>
+      <button id="copy-selected" type="button">复制选中</button>
+      <button id="download-selected" type="button">下载选中到飞牛</button>
+      <span id="result-count"></span>
+    </section>
+    <section id="results" class="results"></section>
+
+    <details class="source-card" aria-labelledby="source-title">
+      <summary id="source-title">搜索数据来源与说明</summary>
+      <p>资源查询优先使用 APIBay，服务不可用或没有结果时自动切换备用索引。</p>
+      <div class="source-grid">
+        <div><span>主接口</span><strong>APIBay API</strong></div>
+        <div><span>备用索引</span><strong>The Pirate Bay 镜像</strong></div>
+        <div><span>本次搜索来源</span><strong id="active-source" class="source-badge">等待搜索</strong></div>
+      </div>
+      <p class="hint">中文片名识别使用豆瓣影视建议和 Wikidata；“最新美剧”数据来自豆瓣公开检索。</p>
+    </details>
+
+    <footer>请仅检索你有权访问的公开内容。片名和查询词会发送至第三方元数据及索引服务。</footer>
+  </main>
+  <script src="fnos.js" defer></script>
+  <script src="subtitle-ui.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

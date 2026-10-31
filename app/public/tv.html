@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>最新美剧 - 美剧追新</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell tv-shell">
+    <header class="app-header">
+      <div class="app-brand">
+      <img src="icon.png" alt="" width="72" height="72">
+      <div>
+        <p class="eyebrow">豆瓣新剧发现 · 美剧追更</p>
+        <h1>美剧追新</h1>
+        <p class="subtitle">发现下一部值得追的美剧。</p>
+      </div>
+    </div>
+      <nav class="page-nav" aria-label="页面导航">
+      <a href="tv.html" class="active" aria-current="page">最新美剧</a>
+      <a href="index.html">资源搜索</a>
+      <a href="settings.html">字幕设置</a>
+    </nav>
+    </header>
+
+    <section class="discover-card">
+      <div class="discover-head">
+        <h2>豆瓣最新美剧</h2>
+        <p class="hint">按豆瓣时间排序 · 最多 60 部</p>
+        <div id="discover-status" class="discover-status" aria-live="polite">正在读取豆瓣数据…</div>
+        <button id="refresh-discover" type="button" class="secondary">刷新</button>
+      </div>
+      <div id="discover-list" class="discover-list"></div>
+    </section>
+
+    <footer>选择一部美剧，搜索资源、下载到飞牛，再配好中文字幕。</footer>
+  </main>
+  <script src="fnos.js" defer></script>
+  <script src="tv.js" defer></script>
+</body>
+</html>

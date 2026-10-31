@@ -1,0 +1,11 @@
+#!/bin/bash
+
+export PATH="/var/apps/python312/target/bin:${PATH}"
+mkdir -p "${TRIM_PKGVAR}" "${TRIM_PKGETC}" "${TRIM_PKGTMP}"
+TOKEN_FILE="${TRIM_PKGETC}/api-token"
+if [ ! -s "${TOKEN_FILE}" ]; then
+    umask 077
+    python3 -c 'import secrets; print(secrets.token_urlsafe(32))' >"${TOKEN_FILE}" || exit 1
+fi
+chmod 600 "${TOKEN_FILE}"
+exit 0

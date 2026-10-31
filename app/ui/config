@@ -1,0 +1,17 @@
+{
+  ".url": {
+    "media_link_helper.main": {
+      "title": "美剧追新",
+      "icon": "images/radar_{0}.png",
+      "type": "iframe",
+      "protocol": "",
+      "gatewayPrefix": "/app/media_link_helper",
+      "gatewaySocket": "app.sock",
+      "url": "/app/media_link_helper/",
+      "allUsers": false,
+      "control": {
+        "accessPerm": "readonly"
+      }
+    }
+  }
+}

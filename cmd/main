@@ -1,0 +1,77 @@
+#!/bin/bash
+
+PID_FILE="${TRIM_PKGVAR}/media-link-helper.pid"
+LOG_FILE="${TRIM_PKGVAR}/media-link-helper.log"
+TOKEN_FILE="${TRIM_PKGETC}/api-token"
+SOCKET_FILE="${TRIM_APPDEST}/app.sock"
+ERROR_FILE="${TRIM_TEMP_LOGFILE:-${TRIM_PKGTMP:-/tmp}/media-link-helper-error.log}"
+export PATH="/var/apps/python312/target/bin:${PATH}"
+
+read_pid() {
+    [ -r "${PID_FILE}" ] && head -n 1 "${PID_FILE}" | tr -d '[:space:]'
+}
+
+is_our_process() {
+    pid="$1"
+    [ -n "${pid}" ] || return 1
+    kill -0 "${pid}" 2>/dev/null || return 1
+    [ -r "/proc/${pid}/cmdline" ] || return 1
+    tr '\0' ' ' <"/proc/${pid}/cmdline" | grep -Fq "${TRIM_APPDEST}/server.py"
+}
+
+is_running() {
+    pid="$(read_pid)"
+    is_our_process "${pid}"
+}
+
+start_app() {
+    if is_running; then
+        return 0
+    fi
+    mkdir -p "${TRIM_PKGVAR}" "${TRIM_PKGETC}" "${TRIM_PKGTMP}"
+    rm -f "${PID_FILE}" "${SOCKET_FILE}"
+    if [ ! -s "${TOKEN_FILE}" ]; then
+        echo "缺少 API 令牌，请重新安装应用。" >"${ERROR_FILE}"
+        return 1
+    fi
+    PORT="${TRIM_SERVICE_PORT:-18088}" SOCKET_PATH="${SOCKET_FILE}" TOKEN_FILE="${TOKEN_FILE}" LOG_FILE="${LOG_FILE}" \
+        nohup python3 "${TRIM_APPDEST}/server.py" >/dev/null 2>&1 &
+    printf '%s' "$!" >"${PID_FILE}"
+
+    count=0
+    while [ "${count}" -lt 15 ]; do
+        if is_running && [ -S "${SOCKET_FILE}" ]; then
+            return 0
+        fi
+        sleep 1
+        count=$((count + 1))
+    done
+    echo "应用启动失败，请查看 ${LOG_FILE}" >"${ERROR_FILE}"
+    stop_app
+    return 1
+}
+
+stop_app() {
+    pid="$(read_pid)"
+    if ! is_our_process "${pid}"; then
+        rm -f "${PID_FILE}" "${SOCKET_FILE}"
+        return 0
+    fi
+    kill -TERM "${pid}" 2>/dev/null || true
+    count=0
+    while is_our_process "${pid}" && [ "${count}" -lt 10 ]; do
+        sleep 1
+        count=$((count + 1))
+    done
+    if is_our_process "${pid}"; then
+        kill -KILL "${pid}" 2>/dev/null || true
+    fi
+    rm -f "${PID_FILE}" "${SOCKET_FILE}"
+}
+
+case "$1" in
+    start) start_app ;;
+    stop) stop_app ;;
+    status) is_running && [ -S "${SOCKET_FILE}" ] && exit 0 || exit 3 ;;
+    *) exit 1 ;;
+esac

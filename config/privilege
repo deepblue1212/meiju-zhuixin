@@ -1,0 +1,7 @@
+{
+  "defaults": {
+    "run-as": "package"
+  },
+  "username": "media_link_helper",
+  "groupname": "media_link_helper"
+}
