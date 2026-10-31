@@ -10,7 +10,8 @@
 
 ## 下载与安装
 
-- **[下载美剧追新 1.9.2 FPK](https://github.com/deepblue1212/meiju-zhuixin/raw/refs/heads/main/dist/media_link_helper-1.9.2.fpk)**
+- **[下载美剧追新 1.9.2 FPK](https://github.com/deepblue1212/meiju-zhuixin/releases/download/v1.9.2/media_link_helper-1.9.2.fpk)**
+- [查看 v1.9.2 发布页](https://github.com/deepblue1212/meiju-zhuixin/releases/tag/v1.9.2)
 - [查看安装包与校验文件](dist/)
 - [查看版本说明](CHANGELOG.md)
 
